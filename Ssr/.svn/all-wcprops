@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/!svn/ver/609167/safe-search-replace/trunk/Ssr
+END
+Plugin.php
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/!svn/ver/605125/safe-search-replace/trunk/Ssr/Plugin.php
+END
+Task.php
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/!svn/ver/605125/safe-search-replace/trunk/Ssr/Task.php
+END
+TaskExecuter.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/!svn/ver/605125/safe-search-replace/trunk/Ssr/TaskExecuter.php
+END
