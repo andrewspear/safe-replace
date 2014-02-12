@@ -1,15 +1,14 @@
 <?php
 
 /*
- 	Plugin Name: Safe Search Replace
-	Plugin URI: http://ssr.benjaminsommer.com
-	Description: Safely search and replace shortcodes and post content. You can <strong>undo changes</strong> if required.
-	Author: Benjamin Sommer
-	Version: 2.0.1
-	Author URI: http://benjaminsommer.com
+ 	Plugin Name: Safe Replace
+	Plugin URI: https://github.com/andrewspear
+	Description: Safely search and replace shortcodes and post content. You can undo changes if required.
+	Author: Andrew Spear (original code by Benjamin Sommer)
+	Version: 3.0.0
+	Author URI: https://spe.ar.com
 	License: CC GNU GPL 2.0 license
 	Text Domain: ssr
-
 	Coding standard: http://framework.zend.com/manual/en/coding-standard.html
 */
 
