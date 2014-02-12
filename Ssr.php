@@ -8,7 +8,7 @@ class Ssr {
 		add_action('admin_menu', 'Ssr::initAdminMenu');
 		add_action('wp_ajax_safesearchreplace', 'Ssr::ajaxHandler');
 		
-		define ('SSR_PATH_DATA', dirname(__FILE__).'/../safe-search-replace-data');
+		define ('SSR_PATH_DATA', dirname(dirname(__FILE__)).'/safe-search-replace-data');
 	}
 	
 	/* PLUGIN INIT */
