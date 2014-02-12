@@ -17,6 +17,9 @@ class Ssr_UI_SimpleSearch {
 		
 		if (isset($_POST['replaceall']) && !empty($_POST['search'])) {
 			$loc = $this->resolveLocation($_POST);
+			foreach (array('where', 'searchcase') as $sessionVars) {
+				$_SESSION['ssr_' . $sessionVars] = (!empty($_POST[$sessionVars])) ? $_POST[$sessionVars] : null;
+			}
 			global $wpdb;
 			$res = $wpdb->get_results("SELECT `{$loc['dbcolumn']}`,`{$loc['dbindex']}` FROM `{$loc['dbtable']}` WHERE `{$loc['dbcolumn']}` LIKE '%{$_POST['search']}%'");
 			if (!empty($res)) {
@@ -54,14 +57,14 @@ class Ssr_UI_SimpleSearch {
 			$sensitive->addOptions(array('sensitive'=>'Yes, respect small and BIG letters', 'insensitive'=>'No, it doesn\'t matter'));
 			
 			$table = new Ssr_UI_TableSettings();
-			$table->addRow(array('Where To Search', $where->render('where')));
+			$table->addRow(array('Where To Search', $where->render('where', (!empty($_SESSION['ssr_where']))?$_SESSION['ssr_where']:'')));
 			$table->addRow(array('Search', '<input type="text" name="search" value="" />'));
 			$table->addRow(array('Replace With', '<input type="text" name="replace" value="" />'));
-			$table->addRow(array('Case sensitive', $sensitive->render('searchcase')));
+			$table->addRow(array('Case sensitive', $sensitive->render('searchcase', (!empty($_SESSION['ssr_searchcase']))?$_SESSION['ssr_searchcase']:'')));
 			
 			echo '<form action="" method="post" id="searchargs">';
 			echo $table->render();
-			echo '<input type="submit" name="replaceall" value="Replace All" class="button-primary" />';
+			echo '<input type="submit" name="replaceall" value="Replace All" class="button-primary" /> ';
 			echo '<input type="button" name="preview" value="Preview" class="button-secondary" />';
 			echo '</form>';
 		}
@@ -100,8 +103,10 @@ jQuery(document).ready(function(e) {
 				$t = '<ol>';
 				foreach ($res as $r) {
 					if ($args['searchcase'] != 'sensitive' || strpos($r->$loc['dbcolumn'], $args['search']) !== false) {
+						$pad = 50;
+						$position = strripos($r->$loc['dbcolumn'], $args['search']);
 						$t .= '<li>';
-						$t .= str_ireplace($args['search'], "<span style=\"color:red;text-decoration:line-through\">{$args['search']}</span><span style=\"color:green\">{$args['replace']}</span>", $r->$loc['dbcolumn']);
+						$t .= '...' . htmlentities(ltrim(substr($r->$loc['dbcolumn'], ($position - $pad > 0) ? $position - $pad : 0, ($position < $pad) ? $position : $pad))) . "<span style=\"color:red;text-decoration:line-through\">{$args['search']}</span><span style=\"color:green\">{$args['replace']}</span>" . htmlentities(rtrim(substr($r->$loc['dbcolumn'], $position + strlen($args['search']), $pad))) . '...';
 						$t .= '</li>';
 						$count++;
 					}
